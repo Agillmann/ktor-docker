@@ -1,0 +1,26 @@
+version: '2'
+services:
+
+  #ktor App
+  ktor-app:
+    build: .
+    ports:
+    - "8080:8080"
+    mem_limit: "521M"
+
+  # SQL database
+  postgres:
+    image: "postgres:9.6.0"
+    restart: "always"
+    volumes:
+      - "ktor-data:/var/lib/postgresql/data"
+    ports:
+      - "54321:5432"
+    environment:
+      POSTGRES_USER: "testuser"
+      POSTGRES_PASSWORD: "mpassword"
+      POSTGRES_DB: "ktor-data"
+    mem_limit: "8g"
+
+volumes:
+  ktor-data:
